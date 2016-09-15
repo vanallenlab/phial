@@ -1,1 +1,0 @@
-individual	num	chr1	str1	pos1	chr2	str2	pos2	class	span	tumreads	normreads	normpanelreads	normpanelsamps	normpaneldetails	min1	max1	range1	stdev1	min2	max2	range2	stdev2	gene1	site1	gene2	site2	fusion
