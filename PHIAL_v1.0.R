@@ -793,7 +793,7 @@ png(png.path, width=5, height=9, res=300, units="in")
 	}
 	axis(1, at=c(1), labels=" ", tick=F, cex.axis=1, font.axis=2)
 	par(las=0)
-	smartlegend(x="right", y="top", c("Clinical", "Biological", "Pathway", "COSMIC", "Syn."), c("red", "orange", "gold", "yellow", "lightgray"), cex=1, inset=0.02, bty="n")
+	legend(x="right", y="top", c("Clinical", "Biological", "Pathway", "COSMIC", "Syn."), c("red", "orange", "gold", "yellow", "lightgray"), cex=1, inset=0.02, bty="n")
 	box(which="plot", lty=1, col="black", lwd=2.5)
 dev.off()
 return(TRUE)
