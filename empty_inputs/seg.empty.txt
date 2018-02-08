@@ -1,0 +1,2 @@
+Sample	Chromosome	Start	End	Num_Probes	Segment_Mean
+

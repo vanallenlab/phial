@@ -38,7 +38,7 @@ databases <- read.delim(opt$databases_paths, header=T, as.is=T, comment.char="#"
 
 #Somatic PHIAL
 for(i in 1:nrow(patient_data)) {
-	bsub.command <- paste("Rscript ./PHIAL_v1.0.R", 
+	bsub.command <- paste("Rscript PHIAL_v1.0.R", 
 		" -i ", patient_data$individual[i],
 		" -t ", patient_data$tumor_type[i],
 		" -o ", patient_data$output_dir[i],

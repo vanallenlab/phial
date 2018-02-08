@@ -20,11 +20,11 @@ option_list <- list(
                     make_option(c("-i", "--individual"), action="store", type="character", help= "Individual patient to be analyzed"),
                     make_option(c("-t", "--tumor_type"), action="store", type="character", help= "Tumor type of patient (i.e. Lung, Colon)"),
                     make_option(c("-o", "--output_dir"), action="store", type="character", help="Output directory for results of analysis", default=getwd()),
-                    make_option("--mut.path", action="store", type="character", help="maf_file_oxoG3_capture"),
-                    make_option("--mut.dumpster", action="store", type="character", help="maf_file_capture_no_filter"),
-                    make_option("--indel.path", action="store", type="character", help="indel_maf_file_capture"),
-                    make_option("--dranger.path", action="store", type="character", help="dRanger capture results"),
-                    make_option("--segfile.path", action="store", type="character", help="CapSeg segementation file"),
+                    make_option("--mut.path", action="store", type="character", help="maf_file_oxoG3_capture", default="empty_inputs/snv.empty.txt"),
+                    make_option("--mut.dumpster", action="store", type="character", help="maf_file_capture_no_filter", default=NA),
+                    make_option("--indel.path", action="store", type="character", help="indel_maf_file_capture", default="empty_inputs/indel.empty.txt"),
+                    make_option("--dranger.path", action="store", type="character", help="dRanger capture results", default="empty_inputs/dranger.empty.txt"),
+                    make_option("--segfile.path", action="store", type="character", help="CapSeg segementation file", default="empty_inputs/seg.empty.txt"),
                     make_option("--actdb.mini", action="store", type="character", help="Actionable genes rationales file"),
                     make_option("--actdb.large", action="store", type="character", help="Large actionable genes file"),
                     make_option("--current_panel", action="store", type="character", help="Current clinical panel file"),
@@ -803,7 +803,7 @@ make_patient_gel(patient.sorted, tmp.path)
 
 #---Make Nozzle HTML report----
 print("Creating Nozzle HTML report")
-source("./Nozzle_template.R")
+source("Nozzle_template.R")
 make_nozzle_report(individual, tumor_type, output_dir)
 
 print("Somatic PHIAL completed.")
