@@ -55,12 +55,28 @@ if(is.na(mut.path)&is.na(indel.path)&is.na(segfile.path)&is.na(dranger.path)) {
 	print("All input from patient is NA...Goodbye")
 	quit()
 }
-	
+
 print("Loading patient data")
 if(is.na(mut.path)) patient.mut <- NA else patient.mut <- read.delim(mut.path, header=TRUE, as.is=TRUE, comment.char="#")
 if(is.na(indel.path)) patient.indel <- NA else patient.indel <- read.delim(indel.path, header=TRUE, as.is=TRUE, comment.char="#")
 if(is.na(segfile.path)) seg <- NA else seg <- read.delim(segfile.path, header=TRUE, as.is=TRUE, comment.char="#")
 if(is.na(dranger.path)) dranger <- NA else dranger <- read.delim(dranger.path, header=TRUE, as.is=TRUE, comment.char="#")
+
+if(!is.na(mut.path)) {
+    patient.mut$t_alt_count_full = patient.mut$t_alt_count
+    patient.mut$t_alt_count = lapply(strsplit(as.character(patient.mut$t_alt_count), '|', fixed=TRUE), as.numeric)
+    patient.mut$t_alt_count = lapply(patient.mut$t_alt_count, min)
+    patient.mut$t_alt_count = as.numeric(patient.mut$t_alt_count)
+    patient.mut$t_ref_count = as.numeric(patient.mut$t_ref_count)
+}
+
+if(!is.na(indel.path)) {
+    patient.indel$t_alt_count_full = patient.indel$t_alt_count
+    patient.indel$t_alt_count = lapply(strsplit(as.character(patient.indel$t_alt_count), '|', fixed=TRUE), as.numeric)
+    patient.indel$t_alt_count = lapply(patient.indel$t_alt_count, min)
+    patient.indel$t_alt_count = as.numeric(patient.indel$t_alt_count)
+    patient.indel$t_ref_count = as.numeric(patient.indel$t_ref_count)
+}
 
 ##Load input databases
 print("Loading input databases")

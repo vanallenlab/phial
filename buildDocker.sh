@@ -1,6 +1,6 @@
 #!/bin/bash
 
-tag=1.0.0
+tag=1.0.1
 
 # Replace ./ with /./ for Docker usage on FireCloud
 sed -i '' "s#Rscript PHIAL_v1.0.R#Rscript /PHIAL_v1.0.R#" PHIAL_wrapper.R

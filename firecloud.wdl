@@ -56,7 +56,7 @@ task RunPHIAL {
     }
 
     runtime {
-        docker: "vanallenlab/phial:1.0.0"
+        docker: "vanallenlab/phial:1.0.1"
         memory: "4 GB"
     }
 }
