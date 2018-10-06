@@ -464,7 +464,7 @@ dranger.score.list <- function(An_patient) {
       #CGC gene, alteration unknown      
       An_patient$bin[i] <- 4
       An_patient$big.bin[i] <- "High Priority"
-    } else if (length(grep(temp.gene1, gsea_overlap_actdb)) > 0  ||  length(grep(temp.gene2, gsea_overlap_actdb)) > 0) {
+    } else if (length(grep(paste(temp_genes,collapse = "|"), gsea_overlap_actdb)) > 0) {
       ## FIXME: can we simplify the || on the grep() calls?
       #Gene in cancer pathway that overlaps with MSigDB cancer pathway
       An_patient$bin[i] <- 5
