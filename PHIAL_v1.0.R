@@ -33,8 +33,9 @@ option_list <- list(
                     make_option("--gsea.overlap", action="store", type="character", help="GSEA overlap file"),
                     make_option("--gsea.modules", action="store", type="character", help="GSEA modules file"),
                     make_option("--pertinent.negs", action="store", type="character", help="pertinent negs file"),
-                    make_option("--refseq", action="store", type="character", help="RefSeq file")
-                    )
+                    make_option("--refseq", action="store", type="character", help="RefSeq file"),
+		    make_option("--create_nozzle_report", action="store", type="character", help="Boolean to create nozzle report", default=FALSE)
+		    )
 
 opt <- parse_args(OptionParser(option_list=option_list, usage = "Rscript %prog [options]"), print_help_and_exit=FALSE)
 save(opt, file="debug.RData")
@@ -818,9 +819,11 @@ tmp.path=paste(output_dir, "/", individual, "_phial_gel.png", sep="")
 make_patient_gel(patient.sorted, tmp.path)
 
 #---Make Nozzle HTML report----
-print("Creating Nozzle HTML report")
-source("Nozzle_template.R")
-make_nozzle_report(individual, tumor_type, output_dir)
-
+nozzle_report_bool = as.logical(opt$create_nozzle_report)
+if (nozzle_report_bool != FALSE) {
+	print("Creating Nozzle HTML report")
+	source("Nozzle_template.R")
+	make_nozzle_report(individual, tumor_type, output_dir)
+}
 print("Somatic PHIAL completed.")
 quit()

@@ -5,6 +5,7 @@ workflow PHIAL {
     File? indelHandle
     File? segHandle
     File? drangerHandle
+    String? create_nozzle_report = "FALSE"
 
     call RunPHIAL {
         input:
@@ -13,7 +14,8 @@ workflow PHIAL {
 	        snvHandle=snvHandle,
 	        indelHandle=indelHandle,
 	        segHandle=segHandle,
-	        drangerHandle=drangerHandle
+	        drangerHandle=drangerHandle,
+		create_nozzle_report=create_nozzle_report
     }
 }
 
@@ -24,6 +26,7 @@ task RunPHIAL {
     File? indelHandle
     File? segHandle
     File? drangerHandle
+    String? create_nozzle_report
     
     command <<<
         actdbMini="/databases/Actionable_genes_rationales_4.29.13.txt"
@@ -40,23 +43,23 @@ task RunPHIAL {
         ${"--segfile.path " + segHandle} ${"--dranger.path " + drangerHandle} \
         --actdb.mini $actdbMini --actdb.large $actdbLarge --current_panel $currentPanel --cosmic $cosmic \
         --gsea.pathways $gseaPathways --gsea.overlap $gseaOverlap --gsea.modules $gseaModules \
-        --refseq $refSeq
+        --refseq $refSeq --create_nozzle_report $create_nozzle_report
     >>>
 
     output {
         File phialGel = "${individual}_phial_gel.png"
-	    File phialClinicalRelevanceLow = "${individual}_investigate_clinical_relevance_low.txt"
-	    File phialClinicalRelevanceHigh = "${individual}_investigate_clinical_relevance_high.txt"
-	    File phialBiologicalRelevance = "${individual}_investigate_biological_relevance.txt"
-	    File phialScoredDetailed = "${individual}_complete_muts_indels_scna_detailed.txt"
-	    File phialScored = "${individual}_complete_muts_indels_scna.txt"
-	    File phialReport = "${individual}_cancer_genome_report.html"
-	    File phialReportRData = "${individual}_cancer_genome_report.RData"
-	    File phialAFHistogram = "${individual}_allelicfx_hist.png"
+	File phialClinicalRelevanceLow = "${individual}_investigate_clinical_relevance_low.txt"
+	File phialClinicalRelevanceHigh = "${individual}_investigate_clinical_relevance_high.txt"
+	File phialBiologicalRelevance = "${individual}_investigate_biological_relevance.txt"
+	File phialScoredDetailed = "${individual}_complete_muts_indels_scna_detailed.txt"
+	File phialScored = "${individual}_complete_muts_indels_scna.txt"
+	File? phialReport = "${individual}_cancer_genome_report.html"
+	File? phialReportRData = "${individual}_cancer_genome_report.RData"
+	File phialAFHistogram = "${individual}_allelicfx_hist.png"
     }
 
     runtime {
-        docker: "vanallenlab/phial:1.0.1"
+        docker: "vanallenlab/phial:1.0.2"
         memory: "4 GB"
     }
 }
