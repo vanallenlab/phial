@@ -38,12 +38,16 @@ task RunPHIAL {
         gseaModules="/databases/GSEA_cancer_modules.txt"
         refSeq="/databases/refGene.hg19.20100825.sorted.txt"
 
+	touch "${individual}_cancer_genome_report.html"
+	touch "${individual}_cancer_genome_report.RData"
+	touch "${individual}_allelicfx_hist.png"
+
         Rscript /PHIAL_v1.0.R -i ${individual} -t ${tumorType} -o . \
         ${"--mut.path " + snvHandle} ${"--indel.path " + indelHandle} \
         ${"--segfile.path " + segHandle} ${"--dranger.path " + drangerHandle} \
         --actdb.mini $actdbMini --actdb.large $actdbLarge --current_panel $currentPanel --cosmic $cosmic \
         --gsea.pathways $gseaPathways --gsea.overlap $gseaOverlap --gsea.modules $gseaModules \
-        --refseq $refSeq --create_nozzle_report $create_nozzle_report
+        --refseq $refSeq --create_nozzle_report ${create_nozzle_report}
     >>>
 
     output {
@@ -53,13 +57,13 @@ task RunPHIAL {
 	File phialBiologicalRelevance = "${individual}_investigate_biological_relevance.txt"
 	File phialScoredDetailed = "${individual}_complete_muts_indels_scna_detailed.txt"
 	File phialScored = "${individual}_complete_muts_indels_scna.txt"
-	File? phialReport = "${individual}_cancer_genome_report.html"
-	File? phialReportRData = "${individual}_cancer_genome_report.RData"
+	File phialReport = "${individual}_cancer_genome_report.html"
+	File phialReportRData = "${individual}_cancer_genome_report.RData"
 	File phialAFHistogram = "${individual}_allelicfx_hist.png"
     }
 
     runtime {
-        docker: "vanallenlab/phial:1.0.2"
+        docker: "vanallenlab/phial:1.0.3"
         memory: "4 GB"
     }
 }
